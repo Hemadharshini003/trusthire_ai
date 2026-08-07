@@ -129,9 +129,7 @@ trusthire_ai/
 
 ---
 
-# 👨‍💻 Team
-
-**Project Name:** TrustHire
+roject Name:** TrustHire
 
 
 
