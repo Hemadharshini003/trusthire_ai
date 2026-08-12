@@ -4,13 +4,13 @@
 
 ---
 
-# 📌 Overview
+# Overview
 
 TrustHire is a full-stack freelancer hiring platform that securely connects clients and freelancers. The platform allows clients to post projects, freelancers to submit proposals, and both parties to manage projects efficiently. Unlike traditional freelancer marketplaces, TrustHire focuses on secure hiring, verified profiles, and transparent project management.
 
 ---
 
-# 🎯 Problem Statement
+# Problem Statement
 
 Many freelancer platforms suffer from fake profiles, proposal spam, and difficulty in selecting trustworthy freelancers. Clients spend significant time filtering applications, while freelancers struggle to build trust with new clients.
 
@@ -18,7 +18,7 @@ TrustHire addresses these challenges by providing a secure hiring workflow with 
 
 ---
 
-# 🚀 Features
+# Features
 
 ## Authentication
 - User Registration
@@ -73,7 +73,7 @@ TrustHire addresses these challenges by providing a secure hiring workflow with 
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```text
 trusthire_ai/
@@ -94,7 +94,7 @@ trusthire_ai/
 └── .gitignore
 ```
 
-# 📊 Database Entities
+# Database Entities
 
 - Users
 - Client Profile
@@ -108,7 +108,7 @@ trusthire_ai/
 
 ---
 
-# 🔐 Security Features
+# Security Features
 
 - Password Hashing
 - JWT Authentication
@@ -118,7 +118,7 @@ trusthire_ai/
 
 ---
 
-# 📈 Future Enhancements
+# Future Enhancements
 
 - AI-based Freelancer Recommendation
 - Trust Score System
@@ -135,6 +135,6 @@ roject Name:** TrustHire
 
 ---
 
-# 📄 License
+# License
 
 This project is developed for academic and educational purposes.
