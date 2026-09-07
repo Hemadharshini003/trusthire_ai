@@ -1,22 +1,51 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
+from pydantic import BaseModel, EmailStr
+from datetime import datetime, timedelta
+from jose import jwt
 
 from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserRegister
-from datetime import datetime, timedelta
-from jose import jwt
-from app.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.config import (
+    SECRET_KEY,
+    ALGORITHM,
+    ACCESS_TOKEN_EXPIRE_MINUTES
+)
+
 router = APIRouter()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
 
+
+# =========================
+# LOGIN SCHEMA
+# =========================
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+# =========================
+# REGISTER
+# =========================
 
 @router.post("/register")
-def register(user: UserRegister, db: Session = Depends(get_db)):
+def register(
+    user: UserRegister,
+    db: Session = Depends(get_db)
+):
 
-    existing_user = db.query(User).filter(User.email == user.email).first()
+    existing_user = (
+        db.query(User)
+        .filter(User.email == user.email)
+        .first()
+    )
 
     if existing_user:
         raise HTTPException(
@@ -24,7 +53,9 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
             detail="Email already registered"
         )
 
-    hashed_password = pwd_context.hash(user.password)
+    hashed_password = pwd_context.hash(
+        user.password
+    )
 
     new_user = User(
         full_name=user.full_name,
@@ -38,32 +69,56 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return {
-        "message": "User registered successfully"
+        "message": "User registered successfully",
+        "user_id": new_user.id,
+        "role": new_user.role
     }
-from pydantic import BaseModel, EmailStr
 
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
+# =========================
+# LOGIN
+# =========================
 
 @router.post("/login")
-def login(user: UserLogin, db: Session = Depends(get_db)):
+def login(
+    user: UserLogin,
+    db: Session = Depends(get_db)
+):
 
-    existing_user = db.query(User).filter(User.email == user.email).first()
+    existing_user = (
+        db.query(User)
+        .filter(User.email == user.email)
+        .first()
+    )
 
+    # User not found
     if not existing_user:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
 
-    if not pwd_context.verify(user.password, existing_user.password):
+    # Password check
+    try:
+        password_valid = pwd_context.verify(
+            user.password,
+            existing_user.password
+        )
+    except Exception:
+        raise HTTPException(
+            status_code=401,
+            detail="Unable to verify password. Please register again."
+        )
+
+    if not password_valid:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
+
+    # =========================
+    # CREATE JWT
+    # =========================
 
     expire = datetime.utcnow() + timedelta(
         minutes=ACCESS_TOKEN_EXPIRE_MINUTES
@@ -81,7 +136,14 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         algorithm=ALGORITHM
     )
 
+    # =========================
+    # RESPONSE
+    # =========================
+
     return {
+        "message": "Login successful",
         "access_token": access_token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "user_id": existing_user.id,
+        "role": existing_user.role
     }

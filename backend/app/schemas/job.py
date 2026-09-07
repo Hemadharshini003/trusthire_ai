@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 
 class JobCreate(BaseModel):
-    client_id: int
     title: str
     description: str
     budget: int
