@@ -2,15 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.models.user import User
-from app.models.job import Job
-from app.models.proposal import Proposal
-
 from app.routers.auth import router as auth_router
 from app.routers.jobs import router as jobs_router
 from app.routers.proposals import router as proposals_router
-from app.routers.users import router as users_router
+from app.routers.reviews import router as reviews_router
 from app.routers.risk import router as risk_router
+from app.routers.users import router as users_router
 
 # =========================================================
 # DATABASE TABLE CREATION
@@ -57,6 +54,7 @@ app.include_router(jobs_router)
 app.include_router(proposals_router)
 app.include_router(users_router)
 app.include_router(risk_router)
+app.include_router(reviews_router)
 
 
 # =========================================================

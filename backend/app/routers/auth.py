@@ -1,18 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from passlib.context import CryptContext
-from pydantic import BaseModel, EmailStr
-from datetime import datetime, timedelta
-from jose import jwt
+from datetime import datetime, timedelta, timezone
 
+from fastapi import APIRouter, Depends, HTTPException
+from jose import jwt
+from passlib.context import CryptContext
+from passlib.exc import UnknownHashError
+from pydantic import BaseModel, EmailStr
+from sqlalchemy.orm import Session
+
+from app.config import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserRegister
-from app.config import (
-    SECRET_KEY,
-    ALGORITHM,
-    ACCESS_TOKEN_EXPIRE_MINUTES
-)
 
 router = APIRouter()
 
@@ -104,7 +102,7 @@ def login(
             user.password,
             existing_user.password
         )
-    except Exception:
+    except (ValueError, UnknownHashError):
         raise HTTPException(
             status_code=401,
             detail="Unable to verify password. Please register again."
@@ -120,9 +118,9 @@ def login(
     # CREATE JWT
     # =========================
 
-    expire = datetime.utcnow() + timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
-    )
+    expire = datetime.now(timezone.utc) + timedelta(
+    minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+)
 
     token_data = {
         "sub": str(existing_user.id),

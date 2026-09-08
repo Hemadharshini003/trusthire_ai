@@ -2,16 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies import get_current_user
 from app.models.job import Job
 from app.models.proposal import Proposal
+from app.models.risk_assessment import RiskAssessment
 from app.models.user import User
-from app.dependencies import get_current_user
-
-from app.services.risk_engine import (
-    analyze_job_risk,
-    analyze_proposal_risk
-)
-
+from app.services.risk_engine import analyze_job_risk, analyze_proposal_risk
 
 router = APIRouter(
     prefix="/risk",
@@ -46,10 +42,39 @@ def analyze_job(
         budget=job.budget
     )
 
+    explanation = "; ".join(
+        result["reasons"]
+    )
+
+    # Check existing assessment
+    assessment = db.query(RiskAssessment).filter(
+        RiskAssessment.job_id == job.id
+    ).first()
+
+    if assessment:
+        assessment.risk_score = result["risk_score"]
+        assessment.risk_level = result["risk_level"]
+        assessment.explanation = explanation
+
+    else:
+        assessment = RiskAssessment(
+            job_id=job.id,
+            risk_score=result["risk_score"],
+            risk_level=result["risk_level"],
+            explanation=explanation
+        )
+
+        db.add(assessment)
+
+    db.commit()
+    db.refresh(assessment)
+
     return {
         "job_id": job.id,
         "title": job.title,
-        **result
+        "risk_score": assessment.risk_score,
+        "risk_level": assessment.risk_level,
+        "reasons": result["reasons"]
     }
 
 
@@ -90,10 +115,6 @@ def analyze_proposal(
             detail="Related job not found"
         )
 
-    # -----------------------------------------------------
-    # Security check
-    # -----------------------------------------------------
-
     if job.client_id != current_user.id:
         raise HTTPException(
             status_code=403,
@@ -109,5 +130,7 @@ def analyze_proposal(
         "proposal_id": proposal.id,
         "job_id": proposal.job_id,
         "freelancer_id": proposal.freelancer_id,
-        **result
+        "risk_score": result["risk_score"],
+        "risk_level": result["risk_level"],
+        "reasons": result["reasons"]
     }
