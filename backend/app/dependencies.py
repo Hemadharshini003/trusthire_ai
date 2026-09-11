@@ -37,14 +37,15 @@ def get_current_user(
             detail="Invalid or expired token"
         )
 
-    user = db.query(User).filter(
-        User.id == int(user_id)
-    ).first()
+    user = db.query(User).filter(User.id == int(user_id)).first()
 
     if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found"
-        )
+       raise HTTPException(
+          status_code=status.HTTP_401_UNAUTHORIZED,
+          detail="User not found"
+    )
+
+    print("DEBUG USER:", user.id, user.email, user.role)
+
 
     return user

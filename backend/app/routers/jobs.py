@@ -173,3 +173,87 @@ def complete_job(
         "status": job.status,
         "freelancer_id": job.freelancer_id
     }
+@router.put("/{job_id}", response_model=JobResponse)
+def update_job(
+    job_id: int,
+    job_data: JobCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.role != "client":
+        raise HTTPException(
+            status_code=403,
+            detail="Only clients can update jobs",
+        )
+
+    job = db.query(Job).filter(Job.id == job_id).first()
+
+    if not job:
+        raise HTTPException(
+            status_code=404,
+            detail="Job not found",
+        )
+
+    if job.client_id != current_user.id:
+        raise HTTPException(
+            status_code=403,
+            detail="You can only update your own jobs",
+        )
+
+    if job.status != "open":
+        raise HTTPException(
+            status_code=400,
+            detail="Only open jobs can be updated",
+        )
+
+    job.title = job_data.title
+    job.description = job_data.description
+    job.budget = job_data.budget
+
+    db.commit()
+    db.refresh(job)
+
+    return job
+@router.delete("/{job_id}")
+def cancel_job(
+    job_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.role != "client":
+        raise HTTPException(
+            status_code=403,
+            detail="Only clients can cancel jobs",
+        )
+
+    job = db.query(Job).filter(Job.id == job_id).first()
+
+    if not job:
+        raise HTTPException(
+            status_code=404,
+            detail="Job not found",
+        )
+
+    if job.client_id != current_user.id:
+        raise HTTPException(
+            status_code=403,
+            detail="You can only cancel your own jobs",
+        )
+
+    if job.status != "open":
+        raise HTTPException(
+            status_code=400,
+            detail="Only open jobs can be cancelled",
+        )
+
+    job.status = "cancelled"
+
+    db.commit()
+    
+    db.refresh(job)
+
+    return {
+        "message": "Job cancelled successfully",
+        "job_id": job.id,
+        "status": job.status,
+    }

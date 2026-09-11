@@ -1,19 +1,19 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class JobCreate(BaseModel):
     title: str
     description: str
-    budget: int
+    budget: int = Field(..., gt=0)
 
 
 class JobResponse(BaseModel):
     id: int
     client_id: int
+    freelancer_id: int | None
     title: str
     description: str
     budget: int
     status: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

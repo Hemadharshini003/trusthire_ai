@@ -1,140 +1,157 @@
-# TrustHire
+# TrustHire AI
 
-> A Secure Freelancer Hiring Platform built using React, FastAPI, and MySQL.
+AI-Powered Cyber Trust Freelance Hiring Platform
 
----
+## 1. Project Overview
 
-# Overview
+TrustHire AI is a secure freelance hiring platform designed to connect clients and freelancers while adding cybersecurity-focused trust and risk intelligence.
 
-TrustHire is a full-stack freelancer hiring platform that securely connects clients and freelancers. The platform allows clients to post projects, freelancers to submit proposals, and both parties to manage projects efficiently. Unlike traditional freelancer marketplaces, TrustHire focuses on secure hiring, verified profiles, and transparent project management.
+The platform provides secure authentication, role-based hiring workflows, proposal management, freelancer trust scoring, reviews, and AI-based cyber risk assessment.
 
----
+## 2. Problem Statement
 
-# Problem Statement
+Traditional freelance platforms mainly focus on connecting clients and freelancers. They provide limited visibility into freelancer trustworthiness and potential cybersecurity risks in job postings or proposals.
 
-Many freelancer platforms suffer from fake profiles, proposal spam, and difficulty in selecting trustworthy freelancers. Clients spend significant time filtering applications, while freelancers struggle to build trust with new clients.
+TrustHire AI addresses this problem by combining freelance hiring workflows with trust scoring and cyber risk assessment.
 
-TrustHire addresses these challenges by providing a secure hiring workflow with profile management, proposal tracking, milestone management, and project monitoring.
+## 3. Key Features
 
----
+### Authentication
+- User registration
+- Secure password hashing using bcrypt
+- JWT-based authentication
+- Role-based access control
 
-# Features
+### Client Features
+- Create jobs
+- View own jobs
+- Update open jobs
+- Cancel open jobs
+- View proposals
+- Accept proposals
+- Reject proposals
+- Complete assigned jobs
+- Review freelancers
+- View trust information
+- Analyze job/proposal cyber risk
 
-## Authentication
-- User Registration
-- Secure Login
-- JWT Authentication
-- Role-based Access Control
+### Freelancer Features
+- View available jobs
+- Submit proposals
+- View submitted proposals
+- View trust score
+- View reviews
+- View cyber risk information
 
-## Client
-- Create Profile
-- Post Jobs
-- Manage Jobs
-- View Proposals
-- Hire Freelancers
-- Track Projects
-- Review Freelancers
+### Trust Intelligence
+- Freelancer trust score
+- Trust level classification
+- Review-based score updates
+- Job cyber risk assessment
+- Proposal cyber risk assessment
+- Risk score and explanation
 
-## Freelancer
-- Create Professional Profile
-- Browse Jobs
-- Submit Proposals
-- Track Assigned Projects
-- Receive Payments
-- Build Reputation
+## 4. User Roles
 
-## Project Management
-- Proposal Tracking
-- Project Tracking
-- Milestones
-- Payment Management
-- Reviews
+### Client
 
----
+Can:
+- Create and manage jobs
+- Review proposals
+- Accept or reject proposals
+- Complete assigned jobs
+- Review freelancers
+- Analyze cyber risk
 
-# 🛠 Tech Stack
+### Freelancer
 
-## Frontend
-- React.js
-- Tailwind CSS
-- Axios
+Can:
+- View open jobs
+- Submit proposals
+- Track proposal status
+- View trust score
+- View reviews
+- Check job risk information
 
-## Backend
+## 5. Technology Stack
+
+### Frontend
+- React
+- Vite
+- JavaScript
+- CSS
+
+### Backend
+- Python
 - FastAPI
 - SQLAlchemy
-- JWT Authentication
+- Pydantic
+- JWT
+- bcrypt
+- Uvicorn
 
-## Database
+### Database
 - MySQL
+- PyMySQL
 
-## Version Control
+### Testing & Quality
+- Pytest
+- Pytest-Cov
+- Ruff
+
+### DevOps
 - Git
 - GitHub
+- GitHub Actions
 
----
+## 6. Database Schema
 
-# Project Structure
+TrustHire AI contains five core entities:
+
+1. Users
+2. Jobs
+3. Proposals
+4. Reviews
+5. Risk Assessments
+
+### Relationships
+
+- User → Jobs
+- User → Proposals
+- Job → Proposals
+- User → Reviews
+- Job → Reviews
+- Job → Risk Assessment
+
+## 7. Business Workflow
 
 ```text
-trusthire_ai/
-│
-├── frontend/
-├── backend/
-├── docs/
-│   ├── diagrams/
-│   ├── Problem_Statement.md
-│   ├── DatabaseSchema.md
-│   ├── Architecture.md
-│   ├── API.md
-│   ├── UserFlow.md
-│   └── Modules.md
-│
-├── README.md
-├── LICENSE
-└── .gitignore
-```
-
-# Database Entities
-
-- Users
-- Client Profile
-- Freelancer Profile
-- Jobs
-- Proposals
-- Projects
-- Payments
-- Milestones
-- Reviews
-
----
-
-# Security Features
-
-- Password Hashing
-- JWT Authentication
-- Role-Based Authorization
-- Input Validation
-- Secure REST APIs
-
----
-
-# Future Enhancements
-
-- AI-based Freelancer Recommendation
-- Trust Score System
-- Secure File Sharing
-- Real-time Notifications
-- Activity Logs
-- Analytics Dashboard
-
----
-
-roject Name:** TrustHire
-
-
-
----
-
-# License
-
-This project is developed for academic and educational purposes.
+Client
+  |
+  v
+Create Job
+  |
+  v
+Open Job
+  |
+  v
+Freelancer Submits Proposal
+  |
+  v
+Client Reviews Proposal
+  |
+  +------ Reject
+  |
+  +------ Accept
+             |
+             v
+          Assigned
+             |
+             v
+          Completed
+             |
+             v
+        Client Review
+             |
+             v
+       Trust Score Update
