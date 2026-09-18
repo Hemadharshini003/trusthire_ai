@@ -6,7 +6,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from app.config import *
 
 DATABASE_URL = (
-    f"mysql+pymysql://{DB_USER}:{quote_plus(DB_PASSWORD)}"
+    f"mysql+pymysql://{DB_USER}:{quote_plus(DB_PASSWORD or '')}"
     f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 engine = create_engine(
