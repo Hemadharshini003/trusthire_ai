@@ -6,16 +6,22 @@ __pycache__/
 
 # Virtual environment
 backend/venv/
+.venv/
 
-# Environment
+# Environment files
+.env
 backend/.env
+frontend/.env
 
 # Node
 frontend/node_modules/
-frontend/dist/_ _ p y c a c h e _ _ / 
- 
- * . p y c 
- 
- . c o v e r a g e 
- 
- .coverage
+frontend/dist/
+
+# Testing / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/

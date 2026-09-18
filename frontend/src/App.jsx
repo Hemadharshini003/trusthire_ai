@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 function App() {
   const [activeSection, setActiveSection] = useState(
@@ -2455,6 +2455,185 @@ function App() {
                   </div>
                 </div>
               )}
+              {selectedRiskJob && (
+  <div className="risk-result-card">
+    <div className="risk-result-top">
+      <div>
+        <span className="overline">
+          JOB RISK RESULT
+        </span>
+
+        <h2>
+          {selectedRiskJob.title}
+        </h2>
+
+        <small>
+          Job #{selectedRiskJob.job_id}
+        </small>
+      </div>
+
+      <div className="risk-score-box">
+        <strong>
+          {selectedRiskJob.risk_score}
+        </strong>
+
+        <span
+          className={riskClass(
+            selectedRiskJob.risk_level
+          )}
+        >
+          {selectedRiskJob.risk_level}
+        </span>
+      </div>
+    </div>
+
+    <div className="risk-progress">
+      <div
+        style={{
+          width: `${Math.min(
+            selectedRiskJob.risk_score,
+            100
+          )}%`,
+        }}
+      />
+    </div>
+
+    {/* INTERNAL AI ANALYSIS */}
+
+    <div className="reason-list">
+      <span className="overline">
+        INTERNAL AI ANALYSIS
+      </span>
+
+      {selectedRiskJob.reasons?.length > 0 ? (
+        selectedRiskJob.reasons.map(
+          (reason, index) => (
+            <div
+              className="reason-row"
+              key={index}
+            >
+              <span>
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <p>{reason}</p>
+            </div>
+          )
+        )
+      ) : (
+        <p className="safe-message">
+          No significant internal risk signals detected.
+        </p>
+      )}
+    </div>
+
+    {/* VIRUSTOTAL */}
+
+    <div className="external-risk-card">
+      <div className="card-heading">
+        <div>
+          <span className="overline">
+            EXTERNAL THREAT INTELLIGENCE
+          </span>
+
+          <h3>
+            VirusTotal URL Analysis
+          </h3>
+        </div>
+
+        <span className="number-label">
+          VT
+        </span>
+      </div>
+
+      {!selectedRiskJob.external_threat_intelligence ? (
+        <div className="safe-message">
+          No URL was detected in this job description.
+        </div>
+      ) : (
+        <>
+          <div className="external-status-row">
+            <div>
+              <small>STATUS</small>
+
+              <strong>
+                {
+                  selectedRiskJob
+                    .external_threat_intelligence
+                    .status
+                }
+              </strong>
+            </div>
+
+            <div>
+              <small>RISK LEVEL</small>
+
+              <strong>
+                {
+                  selectedRiskJob
+                    .external_threat_intelligence
+                    .risk_level || "PENDING"
+                }
+              </strong>
+            </div>
+          </div>
+
+          {selectedRiskJob
+            .external_threat_intelligence
+            .status === "completed" && (
+            <div className="threat-stats">
+              <div>
+                <small>MALICIOUS</small>
+
+                <strong>
+                  {
+                    selectedRiskJob
+                      .external_threat_intelligence
+                      .malicious
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <small>SUSPICIOUS</small>
+
+                <strong>
+                  {
+                    selectedRiskJob
+                      .external_threat_intelligence
+                      .suspicious
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <small>HARMLESS</small>
+
+                <strong>
+                  {
+                    selectedRiskJob
+                      .external_threat_intelligence
+                      .harmless
+                  }
+                </strong>
+              </div>
+            </div>
+          )}
+
+          {selectedRiskJob
+            .external_threat_intelligence
+            .status === "pending" && (
+            <p className="safe-message">
+              VirusTotal analysis is still processing.
+              Run the risk analysis again after a few
+              seconds to retrieve the completed result.
+            </p>
+          )}
+        </>
+      )}
+    </div>
+  </div>
+)}
 
               {selectedRiskProposal && (
                 <div className="risk-result-card">

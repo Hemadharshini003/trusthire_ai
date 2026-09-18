@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,7 +16,12 @@ from app.routers.users import router as users_router
 # =========================================================
 
 Base.metadata.create_all(bind=engine)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+)
 
+logger = logging.getLogger("trusthire")
 
 # =========================================================
 # FASTAPI APPLICATION
@@ -26,7 +33,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-
+logger.info("TrustHire AI backend starting")
 # =========================================================
 # CORS CONFIGURATION
 # =========================================================

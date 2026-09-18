@@ -40,6 +40,21 @@ def analyze_job(
             status_code=404,
             detail="Job not found"
         )
+    if current_user.role == "client" and job.client_id != current_user.id:
+        raise HTTPException(
+            status_code=403,
+            detail="You can only analyze your own jobs"
+        )
+
+    if (
+    current_user.role == "freelancer"
+    and job.status != "open"
+    and job.freelancer_id != current_user.id
+):
+     raise HTTPException(
+        status_code=403,
+        detail="You are not authorized to analyze this job"
+    )
 
     # Internal AI risk analysis
     result = analyze_job_risk(
