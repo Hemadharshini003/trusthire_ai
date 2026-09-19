@@ -12,13 +12,13 @@
     "Segoe UI",
     sans-serif;
 
-  color: #111827;
-  background: #f5f7fa;
+  color: #0f172a;
+  background: #f8fafc;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  --navy: #111827;
-  --navy-light: #1f2937;
+  --navy: #0f172a;
+  --navy-light: #1e293b;
 
   --blue: #2563eb;
   --blue-dark: #1d4ed8;
@@ -36,11 +36,14 @@
   --purple: #7c3aed;
   --purple-soft: #f5f3ff;
 
-  --ink: #111827;
+  /* Improved readable text colors */
+  --ink: #0f172a;
   --text: #334155;
+  --text-dark: #1e293b;
   --muted: #64748b;
+  --muted-dark: #475569;
 
-  --line: #e5e7eb;
+  --line: #e2e8f0;
   --soft: #f8fafc;
   --white: #ffffff;
 }
@@ -53,7 +56,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f5f7fa;
+  background: #f8fafc;
+  color: var(--ink);
 }
 
 button,
@@ -90,7 +94,6 @@ button:disabled {
       #ffffff 55%,
       #eff6ff 100%
     );
-
   color: var(--ink);
 }
 
@@ -102,9 +105,9 @@ button:disabled {
   align-items: center;
   justify-content: space-between;
 
-  border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
 
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(14px);
 
   position: relative;
@@ -147,29 +150,31 @@ button:disabled {
   font-weight: 800;
   letter-spacing: -0.05em;
 
-  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.16);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
 }
 
 .ghost-btn {
-  border: 1px solid #dbe2eb;
+  border: 1px solid #cbd5e1;
   background: white;
-  color: #26364c;
+  color: #1e293b;
 
   padding: 10px 16px;
   border-radius: 8px;
 
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
 
   transition: 0.18s ease;
 }
 
 .ghost-btn:hover {
-  border-color: #b8c5d7;
+  border-color: #94a3b8;
   background: #f8fafc;
 }
 
-/* Landing */
+/* =========================================================
+   LANDING
+   ========================================================= */
 
 .landing {
   max-width: 1180px;
@@ -195,6 +200,7 @@ button:disabled {
   margin: 15px 0 22px;
 
   font-weight: 800;
+  color: #0f172a;
 }
 
 .landing-copy h1 span,
@@ -206,10 +212,10 @@ button:disabled {
 .login-message > p {
   max-width: 560px;
 
-  color: #64748b;
+  color: #475569;
 
   line-height: 1.8;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .overline,
@@ -221,18 +227,17 @@ button:disabled {
 .stat span,
 .list-heading span,
 .number-label {
-  font-size: 9px;
+  font-size: 10px;
 
   font-weight: 800;
 
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 
-  color: #8190a5;
+  color: #64748b;
 }
 
 .landing-points {
   margin-top: 42px;
-
   border-top: 1px solid var(--line);
 }
 
@@ -248,7 +253,7 @@ button:disabled {
 }
 
 .landing-points b {
-  font-size: 9px;
+  font-size: 10px;
 
   color: var(--blue);
 
@@ -261,18 +266,21 @@ button:disabled {
 }
 
 .landing-points strong {
-  font-size: 12px;
+  font-size: 13px;
+  color: #0f172a;
 }
 
 .landing-points small {
-  margin-top: 3px;
+  margin-top: 4px;
 
-  color: #8190a5;
+  color: #64748b;
 
-  font-size: 10px;
+  font-size: 11px;
 }
 
-/* Auth */
+/* =========================================================
+   AUTH
+   ========================================================= */
 
 .auth-box {
   padding: 31px;
@@ -289,18 +297,15 @@ button:disabled {
 
 .auth-box h2 {
   font-size: 26px;
-
   letter-spacing: -0.035em;
-
   margin: 7px 0;
+  color: #0f172a;
 }
 
 .auth-box > p {
   margin: 0;
-
-  color: #7b889b;
-
-  font-size: 11px;
+  color: #64748b;
+  font-size: 12px;
 }
 
 .auth-box form {
@@ -313,24 +318,24 @@ button:disabled {
 
   margin: 15px 0 7px;
 
-  font-size: 10px;
+  font-size: 11px;
 
   font-weight: 700;
 
-  color: #55657a;
+  color: #334155;
 }
 
 .field-input {
   width: 100%;
 
-  padding: 12px 13px;
+  padding: 13px 14px;
 
-  border: 1px solid #dce3ec;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
 
-  background: #fbfcfe;
+  background: #ffffff;
 
-  color: var(--ink);
+  color: #0f172a;
 
   outline: none;
 
@@ -338,20 +343,21 @@ button:disabled {
 }
 
 .field-input:hover {
-  border-color: #c9d4e2;
+  border-color: #94a3b8;
 }
 
 .field-input:focus {
-  border-color: #7c9bf1;
+  border-color: #2563eb;
 
   box-shadow:
-    0 0 0 3px rgba(37, 99, 235, 0.08);
+    0 0 0 3px rgba(37, 99, 235, 0.1);
 
   background: white;
 }
 
 .field-input::placeholder {
-  color: #a1adbc;
+  color: #64748b;
+  opacity: 1;
 }
 
 .textarea {
@@ -359,7 +365,9 @@ button:disabled {
   min-height: 115px;
 }
 
-/* Buttons */
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
 .primary-btn,
 .secondary-btn,
@@ -367,12 +375,12 @@ button:disabled {
 .danger-btn {
   border-radius: 8px;
 
-  padding: 10px 15px;
+  padding: 11px 16px;
 
   border: 1px solid transparent;
 
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
 
   transition: 0.18s ease;
 }
@@ -387,7 +395,6 @@ button:disabled {
 
 .primary-btn:hover {
   background: var(--blue-dark);
-
   transform: translateY(-1px);
 }
 
@@ -397,30 +404,24 @@ button:disabled {
 
 .wide-btn {
   width: 100%;
-
   margin-top: 20px;
-
-  padding: 12px;
+  padding: 13px;
 }
 
 .secondary-btn {
   background: white;
-
-  color: #475569;
-
-  border-color: #dce3ec;
+  color: #334155;
+  border-color: #cbd5e1;
 }
 
 .secondary-btn:hover {
-  border-color: #b9c5d5;
-  background: #fafbfd;
+  border-color: #94a3b8;
+  background: #f8fafc;
 }
 
 .success-btn {
   background: var(--green-soft);
-
-  color: #15803d;
-
+  color: #166534;
   border-color: #bbf7d0;
 }
 
@@ -430,9 +431,7 @@ button:disabled {
 
 .danger-btn {
   background: var(--red-soft);
-
-  color: #b91c1c;
-
+  color: #991b1b;
   border-color: #fecaca;
 }
 
@@ -446,23 +445,16 @@ button:disabled {
 
 .form-foot {
   margin-top: 20px;
-
   text-align: center;
-
-  color: #8a96a7;
-
-  font-size: 10px;
+  color: #64748b;
+  font-size: 11px;
 }
 
 .form-foot button {
   border: 0;
-
   background: none;
-
   color: var(--blue);
-
   font-weight: 700;
-
   margin-left: 4px;
 }
 
@@ -473,16 +465,17 @@ button:disabled {
 
   border-radius: 7px;
 
-  background: #eef4ff;
+  background: #eff6ff;
+  color: #1d4ed8;
 
-  color: #355ab1;
-
-  font-size: 10px;
+  font-size: 11px;
 
   text-align: center;
 }
 
-/* Login */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 .login-landing {
   max-width: 980px;
@@ -515,9 +508,9 @@ button:disabled {
 
   margin-top: 30px;
 
-  color: #718096;
+  color: #475569;
 
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .status-line i,
@@ -546,10 +539,12 @@ button:disabled {
 
   display: flex;
 
-  background: #f5f7fa;
+  background: #f8fafc;
 }
 
-/* Sidebar */
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
 .sidebar {
   position: fixed;
@@ -564,7 +559,7 @@ button:disabled {
 
   background: var(--navy);
 
-  border-right: 1px solid #1f2937;
+  border-right: 1px solid #1e293b;
 
   display: flex;
   flex-direction: column;
@@ -574,9 +569,7 @@ button:disabled {
 
 .side-logo {
   padding: 0 10px;
-
   margin-bottom: 45px;
-
   color: white;
 }
 
@@ -587,15 +580,12 @@ button:disabled {
 
 .workspace-label {
   padding: 0 12px;
-
   margin-bottom: 9px;
-
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .sidebar nav {
   display: grid;
-
   gap: 4px;
 }
 
@@ -608,13 +598,13 @@ button:disabled {
 
   background: transparent;
 
-  color: #94a3b8;
+  color: #cbd5e1;
 
-  padding: 11px 12px;
+  padding: 12px;
 
   border-radius: 8px;
 
-  font-size: 11px;
+  font-size: 12px;
 
   font-weight: 600;
 
@@ -622,16 +612,13 @@ button:disabled {
 }
 
 .side-link:hover {
-  background: #1f2937;
-
+  background: #1e293b;
   color: white;
 }
 
 .side-link.active {
   background: #1e40af;
-
   border-color: #2563eb;
-
   color: white;
 
   box-shadow:
@@ -640,11 +627,8 @@ button:disabled {
 
 .side-icon {
   display: inline-block;
-
   width: 27px;
-
-  color: #64748b;
-
+  color: #94a3b8;
   font-size: 14px;
 }
 
@@ -652,7 +636,9 @@ button:disabled {
   color: white;
 }
 
-/* Sidebar bottom */
+/* =========================================================
+   SIDEBAR BOTTOM
+   ========================================================= */
 
 .sidebar-bottom {
   margin-top: auto;
@@ -667,8 +653,8 @@ button:disabled {
 
   padding: 12px;
 
-  border-top: 1px solid #273244;
-  border-bottom: 1px solid #273244;
+  border-top: 1px solid #334155;
+  border-bottom: 1px solid #334155;
 
   margin-bottom: 10px;
 }
@@ -698,17 +684,14 @@ button:disabled {
 }
 
 .account-mini strong {
-  font-size: 11px;
-
+  font-size: 12px;
   color: white;
 }
 
 .account-mini small {
   margin-top: 2px;
-
-  color: #64748b;
-
-  font-size: 9px;
+  color: #94a3b8;
+  font-size: 10px;
 }
 
 .signout {
@@ -718,31 +701,32 @@ button:disabled {
 
   background: transparent;
 
-  color: #94a3b8;
+  color: #cbd5e1;
 
   text-align: left;
 
   padding: 10px 12px;
 
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .signout:hover {
   color: #f87171;
 }
 
-/* Main */
+/* =========================================================
+   MAIN
+   ========================================================= */
 
 .main {
   width: calc(100% - 245px);
-
   margin-left: 245px;
 }
 
 .topbar {
   height: 78px;
 
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.96);
 
   border-bottom: 1px solid var(--line);
 
@@ -764,17 +748,18 @@ button:disabled {
 }
 
 .crumb {
-  font-size: 8px;
-
-  color: #9aa6b6;
+  font-size: 9px;
+  color: #64748b;
 }
 
 .topbar h2 {
   margin: 5px 0 0;
 
-  font-size: 18px;
+  font-size: 19px;
 
   letter-spacing: -0.025em;
+
+  color: #0f172a;
 }
 
 .top-user {
@@ -784,9 +769,9 @@ button:disabled {
 
   gap: 9px;
 
-  color: #7b889b;
+  color: #475569;
 
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .content {
@@ -797,7 +782,9 @@ button:disabled {
   padding: 35px 38px;
 }
 
-/* Toast */
+/* =========================================================
+   TOAST
+   ========================================================= */
 
 .toast {
   position: fixed;
@@ -807,9 +794,9 @@ button:disabled {
 
   z-index: 30;
 
-  padding: 11px 14px;
+  padding: 12px 15px;
 
-  border: 1px solid #d9e5fb;
+  border: 1px solid #dbeafe;
 
   background: white;
 
@@ -818,9 +805,9 @@ button:disabled {
 
   border-radius: 8px;
 
-  color: #43546b;
+  color: #334155;
 
-  font-size: 10px;
+  font-size: 11px;
 
   display: flex;
 
@@ -845,7 +832,7 @@ button:disabled {
 
   background: none;
 
-  color: #98a4b3;
+  color: #64748b;
 
   margin-left: 8px;
 
@@ -873,7 +860,7 @@ button:disabled {
 
   padding: 38px 42px;
 
-  border: 1px solid #dfe6f0;
+  border: 1px solid #dbe3ee;
 
   border-radius: 16px;
 
@@ -904,6 +891,8 @@ button:disabled {
   line-height: 1.04;
 
   letter-spacing: -0.045em;
+
+  color: #0f172a;
 }
 
 .hero-card h1 span {
@@ -913,9 +902,9 @@ button:disabled {
 .hero-card p {
   max-width: 570px;
 
-  color: #77869a;
+  color: #475569;
 
-  font-size: 12px;
+  font-size: 13px;
 
   line-height: 1.7;
 
@@ -976,7 +965,9 @@ button:disabled {
     0 15px 40px rgba(16, 26, 43, 0.2);
 }
 
-/* Stats */
+/* =========================================================
+   STATS
+   ========================================================= */
 
 .stat-grid {
   display: grid;
@@ -1010,17 +1001,19 @@ button:disabled {
 .stat strong {
   display: block;
 
-  font-size: 24px;
+  font-size: 25px;
 
-  margin: 14px 0 3px;
+  margin: 14px 0 4px;
 
   letter-spacing: -0.04em;
+
+  color: #0f172a;
 }
 
 .stat small {
-  color: #97a3b3;
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .accent-stat {
@@ -1033,16 +1026,18 @@ button:disabled {
 
 .accent-stat span,
 .accent-stat small {
-  color: #9aa8bd;
+  color: #cbd5e1;
 }
 
 .accent-stat strong {
   color: #60a5fa;
 
-  font-size: 24px;
+  font-size: 25px;
 }
 
-/* Cards */
+/* =========================================================
+   CARDS
+   ========================================================= */
 
 .dashboard-columns {
   display: grid;
@@ -1078,10 +1073,16 @@ button:disabled {
 .security-card h3 {
   margin: 5px 0 0;
 
-  font-size: 15px;
+  font-size: 16px;
 
   letter-spacing: -0.02em;
+
+  color: #0f172a;
 }
+
+/* =========================================================
+   SHORTCUTS
+   ========================================================= */
 
 .shortcut-grid {
   display: grid;
@@ -1098,11 +1099,11 @@ button:disabled {
 
   padding: 16px;
 
-  border: 1px solid #e1e7ef;
+  border: 1px solid #dbe3ee;
 
   border-radius: 10px;
 
-  background: #fbfcfe;
+  background: #ffffff;
 
   color: var(--ink);
 
@@ -1122,7 +1123,7 @@ button:disabled {
 
   color: var(--blue);
 
-  font-size: 8px;
+  font-size: 10px;
 
   font-weight: 800;
 
@@ -1135,18 +1136,23 @@ button:disabled {
 }
 
 .shortcut-grid strong {
-  font-size: 11px;
+  font-size: 12px;
+  color: #0f172a;
 }
 
 .shortcut-grid small {
-  color: #8794a6;
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 10px;
 
   margin-top: 4px;
 
   line-height: 1.5;
 }
+
+/* =========================================================
+   SECURITY CARD
+   ========================================================= */
 
 .security-card {
   background: #111827;
@@ -1157,7 +1163,7 @@ button:disabled {
 }
 
 .security-card .overline {
-  color: #8394ac;
+  color: #94a3b8;
 }
 
 .security-score {
@@ -1168,7 +1174,7 @@ button:disabled {
 
   border-radius: 50%;
 
-  border: 1px solid #38516e;
+  border: 1px solid #475569;
 
   display: grid;
 
@@ -1180,21 +1186,21 @@ button:disabled {
 .security-score b {
   color: #60a5fa;
 
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .security-score span {
-  font-size: 7px;
+  font-size: 8px;
 
-  color: #8294aa;
+  color: #cbd5e1;
 
   margin-top: 2px;
 }
 
 .security-card p {
-  color: #8999ad;
+  color: #cbd5e1;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.7;
 }
@@ -1206,7 +1212,7 @@ button:disabled {
 
   color: var(--blue);
 
-  font-size: 10px;
+  font-size: 11px;
 
   font-weight: 700;
 }
@@ -1230,11 +1236,11 @@ button:disabled {
 }
 
 .activity-type {
-  font-size: 8px;
+  font-size: 9px;
 
   font-weight: 800;
 
-  color: #8290a2;
+  color: #64748b;
 }
 
 .activity-row strong,
@@ -1243,18 +1249,21 @@ button:disabled {
 }
 
 .activity-row strong {
-  font-size: 10px;
+  font-size: 11px;
+  color: #0f172a;
 }
 
 .activity-row small {
-  color: #8d9aac;
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 10px;
 
   margin-top: 3px;
 }
 
-/* Mini statistics */
+/* =========================================================
+   MINI STATISTICS
+   ========================================================= */
 
 .mini-stat-grid {
   display: grid;
@@ -1271,15 +1280,17 @@ button:disabled {
 
   background: #f8fafc;
 
-  border: 1px solid #edf0f4;
+  border: 1px solid #e2e8f0;
 }
 
 .mini-stat-grid strong {
   display: block;
 
-  font-size: 20px;
+  font-size: 21px;
 
   letter-spacing: -0.04em;
+
+  color: #0f172a;
 }
 
 .mini-stat-grid span {
@@ -1287,12 +1298,14 @@ button:disabled {
 
   margin-top: 4px;
 
-  font-size: 9px;
+  font-size: 10px;
 
-  color: var(--muted);
+  color: #64748b;
 }
 
-/* Trust inline */
+/* =========================================================
+   TRUST
+   ========================================================= */
 
 .trust-inline {
   display: flex;
@@ -1320,21 +1333,22 @@ button:disabled {
 
   color: var(--blue);
 
-  font-size: 17px;
+  font-size: 18px;
 
   font-weight: 800;
 }
 
 .trust-inline strong {
-  font-size: 15px;
+  font-size: 16px;
+  color: #0f172a;
 }
 
 .trust-inline p {
   margin: 5px 0 0;
 
-  color: var(--muted);
+  color: #64748b;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.6;
 }
@@ -1358,17 +1372,19 @@ button:disabled {
 .page-title h1 {
   margin: 8px 0 6px;
 
-  font-size: 31px;
+  font-size: 32px;
 
   letter-spacing: -0.045em;
+
+  color: #0f172a;
 }
 
 .page-title p {
   margin: 0;
 
-  color: #7c899b;
+  color: #475569;
 
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .create-card {
@@ -1376,7 +1392,7 @@ button:disabled {
 }
 
 .number-label {
-  color: #a5b0be;
+  color: #64748b;
 }
 
 .form-row {
@@ -1439,11 +1455,15 @@ button:disabled {
 
   background: transparent;
 
-  color: var(--ink);
+  color: #0f172a;
 
-  font-size: 10px;
+  font-size: 11px;
 
   width: 100%;
+}
+
+.search input::placeholder {
+  color: #64748b;
 }
 
 .mini-input {
@@ -1459,9 +1479,9 @@ button:disabled {
 
   background: transparent;
 
-  color: #8491a3;
+  color: #475569;
 
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .list-heading {
@@ -1475,9 +1495,9 @@ button:disabled {
 }
 
 .list-heading small {
-  font-size: 9px;
+  font-size: 10px;
 
-  color: #a1acba;
+  color: #64748b;
 }
 
 .job-list,
@@ -1511,7 +1531,7 @@ button:disabled {
 .job-item:hover,
 .proposal-item:hover,
 .review-item:hover {
-  border-color: #ccd7e7;
+  border-color: #cbd5e1;
 
   box-shadow:
     0 8px 25px rgba(22, 45, 75, 0.05);
@@ -1539,17 +1559,19 @@ button:disabled {
 .review-item h3 {
   margin: 7px 0 8px;
 
-  font-size: 16px;
+  font-size: 17px;
 
   letter-spacing: -0.02em;
+
+  color: #0f172a;
 }
 
 .job-main p {
   margin: 0 0 17px;
 
-  color: #7b899c;
+  color: #475569;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.7;
 
@@ -1572,13 +1594,16 @@ button:disabled {
 }
 
 .job-details small {
-  font-size: 7px;
+  font-size: 9px;
+  color: #64748b;
 }
 
 .job-details strong {
-  font-size: 10px;
+  font-size: 11px;
 
   margin-top: 4px;
+
+  color: #0f172a;
 }
 
 .job-action {
@@ -1599,18 +1624,20 @@ button:disabled {
   min-width: 120px;
 }
 
-/* Status badges */
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
 
 .badge {
-  padding: 5px 8px;
+  padding: 6px 9px;
 
   border-radius: 5px;
 
-  font-size: 7px;
+  font-size: 8px;
 
   font-weight: 800;
 
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
 
   text-transform: uppercase;
 
@@ -1618,48 +1645,46 @@ button:disabled {
 }
 
 .open {
-  background: #ecfdf3;
-
-  color: #15803d;
+  background: #dcfce7;
+  color: #166534;
 }
 
 .assigned {
-  background: #fffbeb;
-
-  color: #a16207;
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .completed {
-  background: #eff6ff;
-
-  color: #2563eb;
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 .accepted {
-  background: #eff6ff;
-
-  color: #2563eb;
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 .pending {
-  background: #f1f5f9;
-
-  color: #64748b;
+  background: #e2e8f0;
+  color: #475569;
 }
 
 .rejected,
 .cancelled {
-  background: #fef2f2;
-
-  color: #b91c1c;
+  background: #fee2e2;
+  color: #991b1b;
 }
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
 
 .empty-state {
   text-align: center;
 
   padding: 70px 20px;
 
-  border: 1px dashed #d5dde8;
+  border: 1px dashed #cbd5e1;
 
   border-radius: 12px;
 
@@ -1669,19 +1694,21 @@ button:disabled {
 .empty-state > span {
   font-size: 25px;
 
-  color: #a8b5c5;
+  color: #64748b;
 }
 
 .empty-state h3 {
-  font-size: 14px;
+  font-size: 15px;
 
   margin: 10px 0 4px;
+
+  color: #0f172a;
 }
 
 .empty-state p {
-  font-size: 10px;
+  font-size: 11px;
 
-  color: #8794a6;
+  color: #64748b;
 }
 
 /* =========================================================
@@ -1709,11 +1736,13 @@ button:disabled {
 
   background: #f8fafc;
 
-  color: #69788d;
+  color: #334155;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.7;
+
+  border: 1px solid #e2e8f0;
 }
 
 .proposal-bottom {
@@ -1730,9 +1759,11 @@ button:disabled {
 }
 
 .proposal-bottom strong {
-  font-size: 11px;
+  font-size: 12px;
 
   margin-top: 4px;
+
+  color: #0f172a;
 }
 
 .proposal-actions {
@@ -1780,21 +1811,23 @@ button:disabled {
 }
 
 .trust-main-card .overline {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .trust-main-card h2 {
   margin: 8px 0;
 
-  font-size: 24px;
+  font-size: 25px;
+
+  color: white;
 }
 
 .trust-main-card p {
   max-width: 520px;
 
-  color: #94a3b8;
+  color: #cbd5e1;
 
-  font-size: 11px;
+  font-size: 12px;
 
   line-height: 1.7;
 }
@@ -1841,13 +1874,14 @@ button:disabled {
 }
 
 .score-guide strong {
-  font-size: 10px;
+  font-size: 11px;
+  color: #0f172a;
 }
 
 .score-guide small {
-  color: var(--muted);
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .guide-dot {
@@ -1874,7 +1908,7 @@ button:disabled {
 
   margin: 15px 0 5px;
 
-  font-size: 34px;
+  font-size: 35px;
 
   letter-spacing: -0.05em;
 
@@ -1882,9 +1916,9 @@ button:disabled {
 }
 
 .content-card > p {
-  color: var(--muted);
+  color: #475569;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.7;
 }
@@ -1945,15 +1979,17 @@ button:disabled {
 .risk-result-top h2 {
   margin: 7px 0 4px;
 
-  font-size: 20px;
+  font-size: 21px;
 
   letter-spacing: -0.03em;
+
+  color: #0f172a;
 }
 
 .risk-result-top small {
-  color: var(--muted);
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .risk-score-box {
@@ -1967,15 +2003,17 @@ button:disabled {
 
   background: #f8fafc;
 
-  border: 1px solid #edf0f4;
+  border: 1px solid #e2e8f0;
 }
 
 .risk-score-box strong {
   display: block;
 
-  font-size: 28px;
+  font-size: 29px;
 
   letter-spacing: -0.05em;
+
+  color: #0f172a;
 }
 
 .risk-badge {
@@ -1983,11 +2021,11 @@ button:disabled {
 
   margin-top: 6px;
 
-  padding: 5px 9px;
+  padding: 6px 9px;
 
   border-radius: 5px;
 
-  font-size: 7px;
+  font-size: 8px;
 
   font-weight: 800;
 
@@ -1995,21 +2033,21 @@ button:disabled {
 }
 
 .risk-badge.high {
-  background: #fef2f2;
+  background: #fee2e2;
 
-  color: #dc2626;
+  color: #b91c1c;
 }
 
 .risk-badge.medium {
-  background: #fffbeb;
+  background: #fef3c7;
 
-  color: #d97706;
+  color: #92400e;
 }
 
 .risk-badge.low {
-  background: #ecfdf3;
+  background: #dcfce7;
 
-  color: #16a34a;
+  color: #166534;
 }
 
 .risk-progress {
@@ -2017,7 +2055,7 @@ button:disabled {
 
   margin: 25px 0;
 
-  background: #e5e7eb;
+  background: #e2e8f0;
 
   border-radius: 99px;
 
@@ -2049,7 +2087,7 @@ button:disabled {
 
   padding: 12px 0;
 
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .reason-row > span {
@@ -2057,7 +2095,7 @@ button:disabled {
 
   color: var(--blue);
 
-  font-size: 8px;
+  font-size: 9px;
 
   font-weight: 800;
 }
@@ -2065,23 +2103,25 @@ button:disabled {
 .reason-row p {
   margin: 0;
 
-  color: #64748b;
+  color: #334155;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.6;
 }
 
 .safe-message {
-  color: #15803d;
+  color: #166534;
 
-  font-size: 10px;
+  font-size: 11px;
 
   background: #ecfdf3;
 
   padding: 11px;
 
   border-radius: 7px;
+
+  border: 1px solid #bbf7d0;
 }
 
 /* =========================================================
@@ -2101,7 +2141,7 @@ button:disabled {
 .review-score {
   margin: 12px 0 3px;
 
-  font-size: 32px;
+  font-size: 34px;
 
   font-weight: 800;
 
@@ -2111,9 +2151,9 @@ button:disabled {
 }
 
 .review-summary strong {
-  font-size: 10px;
+  font-size: 11px;
 
-  color: var(--muted);
+  color: #475569;
 }
 
 .review-item {
@@ -2139,11 +2179,13 @@ button:disabled {
 
   background: #f8fafc;
 
-  color: #64748b;
+  color: #334155;
 
-  font-size: 10px;
+  font-size: 11px;
 
   line-height: 1.7;
+
+  border: 1px solid #e2e8f0;
 }
 
 .review-meta {
@@ -2151,9 +2193,9 @@ button:disabled {
 
   border-top: 1px solid var(--line);
 
-  color: #94a3b8;
+  color: #64748b;
 
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .rating {
@@ -2164,6 +2206,71 @@ button:disabled {
   letter-spacing: 2px;
 
   white-space: nowrap;
+}
+
+/* =========================================================
+   EXTERNAL THREAT INTELLIGENCE
+   ========================================================= */
+
+.external-risk-card {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.external-status-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.external-status-row > div,
+.threat-stats > div {
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.external-status-row small,
+.threat-stats small {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #475569;
+}
+
+.external-status-row strong {
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.threat-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.threat-stats strong {
+  font-size: 25px;
+  color: #0f172a;
+}
+
+/* =========================================================
+   FOCUS / ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.22);
+  outline-offset: 2px;
 }
 
 /* =========================================================
@@ -2181,7 +2288,6 @@ button:disabled {
 
   .hero-graphic {
     width: 190px;
-
     min-width: 190px;
   }
 
@@ -2194,9 +2300,7 @@ button:disabled {
   .landing,
   .login-landing {
     grid-template-columns: 1fr;
-
     padding: 45px 25px;
-
     gap: 35px;
   }
 
@@ -2214,7 +2318,6 @@ button:disabled {
 
   .main {
     width: calc(100% - 215px);
-
     margin-left: 215px;
   }
 
@@ -2242,8 +2345,6 @@ button:disabled {
     padding: 23px;
   }
 
-  /* Mobile sidebar */
-
   .sidebar {
     position: relative;
 
@@ -2255,7 +2356,7 @@ button:disabled {
 
     border-right: 0;
 
-    border-bottom: 1px solid #273244;
+    border-bottom: 1px solid #334155;
 
     padding: 15px;
   }
@@ -2266,7 +2367,6 @@ button:disabled {
 
   .main {
     width: 100%;
-
     margin: 0;
   }
 
@@ -2276,10 +2376,8 @@ button:disabled {
 
   .side-link {
     text-align: center;
-
-    padding: 9px 3px;
-
-    font-size: 9px;
+    padding: 10px 3px;
+    font-size: 10px;
   }
 
   .side-icon {
@@ -2320,7 +2418,6 @@ button:disabled {
 
   .hero-card {
     padding: 27px;
-
     min-height: 0;
   }
 
@@ -2362,11 +2459,8 @@ button:disabled {
 
   .mini-input {
     max-width: none;
-
     flex: 1;
-
     border: 1px solid var(--line);
-
     border-radius: 7px;
   }
 
@@ -2384,7 +2478,6 @@ button:disabled {
 
   .job-details {
     gap: 20px;
-
     flex-wrap: wrap;
   }
 
@@ -2406,12 +2499,16 @@ button:disabled {
 
   .risk-score-box {
     margin-top: 18px;
-
     width: 100%;
   }
 
   .action-stack {
     width: 100%;
+  }
+
+  .external-status-row,
+  .threat-stats {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2450,7 +2547,6 @@ button:disabled {
 
   .risk-input-row .primary-btn {
     width: 100%;
-
     margin-top: 8px;
   }
 
@@ -2475,60 +2571,5 @@ button:disabled {
   .landing-copy h1,
   .login-message h1 {
     font-size: 38px;
-  }
-}
-.external-risk-card {
-  margin-top: 28px;
-  padding-top: 28px;
-  border-top: 1px solid #e5e7eb;
-}
-
-.external-status-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.external-status-row > div,
-.threat-stats > div {
-  padding: 16px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-}
-
-.external-status-row small,
-.threat-stats small {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #64748b;
-}
-
-.external-status-row strong {
-  text-transform: uppercase;
-  font-size: 14px;
-  color: #111827;
-}
-
-.threat-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.threat-stats strong {
-  font-size: 24px;
-  color: #111827;
-}
-
-@media (max-width: 700px) {
-  .external-status-row,
-  .threat-stats {
-    grid-template-columns: 1fr;
   }
 }
