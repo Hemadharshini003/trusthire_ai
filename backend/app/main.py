@@ -32,7 +32,9 @@ app = FastAPI(
     description="AI-powered cybersecurity-focused freelance hiring platform",
     version="1.0.0"
 )
-
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 logger.info("TrustHire AI backend starting")
 # =========================================================
 # CORS CONFIGURATION
