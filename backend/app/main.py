@@ -1,8 +1,9 @@
 import logging
-from app.config import FRONTEND_URL
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.config import FRONTEND_URL
 from app.database import Base, engine
 from app.routers.auth import router as auth_router
 from app.routers.jobs import router as jobs_router
