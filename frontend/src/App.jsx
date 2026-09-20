@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API = "http://127.0.0.1:8000";
 
 function App() {
   const [activeSection, setActiveSection] = useState(
@@ -57,6 +57,7 @@ function App() {
   const [riskLoading, setRiskLoading] = useState(false);
 
   const [reviews, setReviews] = useState([]);
+  const [selectedReviewJob, setSelectedReviewJob] = useState(null);
   const [reviewForm, setReviewForm] = useState({
     freelancer_id: "",
     job_id: "",
@@ -594,6 +595,22 @@ function App() {
     }
   };
 
+  const startReview = (job) => {
+    if (job.status !== "completed" || !job.freelancer_id) {
+      notify("This job is not ready for review.");
+      return;
+    }
+
+    setSelectedReviewJob(job);
+    setReviewForm({
+      freelancer_id: job.freelancer_id,
+      job_id: job.id,
+      rating: 5,
+      comment: "",
+    });
+    navigate("reviews");
+  };
+
   const createReview = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -623,6 +640,7 @@ function App() {
         rating: 5,
         comment: "",
       });
+      setSelectedReviewJob(null);
 
       notify("Review submitted successfully.");
       fetchTrustScore();
@@ -1827,16 +1845,30 @@ function App() {
 
                         {job.status ===
                           "completed" && (
-                          <button
-                            className="secondary-btn small"
-                            onClick={() =>
-                              analyzeJobRisk(
-                                job.id
-                              )
-                            }
-                          >
-                            View risk
-                          </button>
+                          <div className="action-stack">
+                            {userRole === "client" &&
+                              job.freelancer_id && (
+                                <button
+                                  className="primary-btn small"
+                                  onClick={() =>
+                                    startReview(job)
+                                  }
+                                >
+                                  Review freelancer →
+                                </button>
+                              )}
+
+                            <button
+                              className="secondary-btn small"
+                              onClick={() =>
+                                analyzeJobRisk(
+                                  job.id
+                                )
+                              }
+                            >
+                              View risk
+                            </button>
+                          </div>
                         )}
                       </div>
                     </article>
@@ -2455,185 +2487,6 @@ function App() {
                   </div>
                 </div>
               )}
-              {selectedRiskJob && (
-  <div className="risk-result-card">
-    <div className="risk-result-top">
-      <div>
-        <span className="overline">
-          JOB RISK RESULT
-        </span>
-
-        <h2>
-          {selectedRiskJob.title}
-        </h2>
-
-        <small>
-          Job #{selectedRiskJob.job_id}
-        </small>
-      </div>
-
-      <div className="risk-score-box">
-        <strong>
-          {selectedRiskJob.risk_score}
-        </strong>
-
-        <span
-          className={riskClass(
-            selectedRiskJob.risk_level
-          )}
-        >
-          {selectedRiskJob.risk_level}
-        </span>
-      </div>
-    </div>
-
-    <div className="risk-progress">
-      <div
-        style={{
-          width: `${Math.min(
-            selectedRiskJob.risk_score,
-            100
-          )}%`,
-        }}
-      />
-    </div>
-
-    {/* INTERNAL AI ANALYSIS */}
-
-    <div className="reason-list">
-      <span className="overline">
-        INTERNAL AI ANALYSIS
-      </span>
-
-      {selectedRiskJob.reasons?.length > 0 ? (
-        selectedRiskJob.reasons.map(
-          (reason, index) => (
-            <div
-              className="reason-row"
-              key={index}
-            >
-              <span>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-
-              <p>{reason}</p>
-            </div>
-          )
-        )
-      ) : (
-        <p className="safe-message">
-          No significant internal risk signals detected.
-        </p>
-      )}
-    </div>
-
-    {/* VIRUSTOTAL */}
-
-    <div className="external-risk-card">
-      <div className="card-heading">
-        <div>
-          <span className="overline">
-            EXTERNAL THREAT INTELLIGENCE
-          </span>
-
-          <h3>
-            VirusTotal URL Analysis
-          </h3>
-        </div>
-
-        <span className="number-label">
-          VT
-        </span>
-      </div>
-
-      {!selectedRiskJob.external_threat_intelligence ? (
-        <div className="safe-message">
-          No URL was detected in this job description.
-        </div>
-      ) : (
-        <>
-          <div className="external-status-row">
-            <div>
-              <small>STATUS</small>
-
-              <strong>
-                {
-                  selectedRiskJob
-                    .external_threat_intelligence
-                    .status
-                }
-              </strong>
-            </div>
-
-            <div>
-              <small>RISK LEVEL</small>
-
-              <strong>
-                {
-                  selectedRiskJob
-                    .external_threat_intelligence
-                    .risk_level || "PENDING"
-                }
-              </strong>
-            </div>
-          </div>
-
-          {selectedRiskJob
-            .external_threat_intelligence
-            .status === "completed" && (
-            <div className="threat-stats">
-              <div>
-                <small>MALICIOUS</small>
-
-                <strong>
-                  {
-                    selectedRiskJob
-                      .external_threat_intelligence
-                      .malicious
-                  }
-                </strong>
-              </div>
-
-              <div>
-                <small>SUSPICIOUS</small>
-
-                <strong>
-                  {
-                    selectedRiskJob
-                      .external_threat_intelligence
-                      .suspicious
-                  }
-                </strong>
-              </div>
-
-              <div>
-                <small>HARMLESS</small>
-
-                <strong>
-                  {
-                    selectedRiskJob
-                      .external_threat_intelligence
-                      .harmless
-                  }
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {selectedRiskJob
-            .external_threat_intelligence
-            .status === "pending" && (
-            <p className="safe-message">
-              VirusTotal analysis is still processing.
-              Run the risk analysis again after a few
-              seconds to retrieve the completed result.
-            </p>
-          )}
-        </>
-      )}
-    </div>
-  </div>
-)}
 
               {selectedRiskProposal && (
                 <div className="risk-result-card">
@@ -2771,65 +2624,127 @@ function App() {
 
               {userRole === "client" ? (
                 <>
-                  <div className="content-card create-card">
+                  <div className="content-card">
                     <div className="card-heading">
                       <div>
                         <span className="overline">
-                          FEEDBACK
+                          COMPLETED WORK
                         </span>
 
                         <h3>
-                          Review a freelancer
+                          Choose a completed job to review
                         </h3>
                       </div>
 
                       <span className="number-label">
-                        01
+                        {jobs.filter(
+                          (job) =>
+                            job.status === "completed" &&
+                            job.freelancer_id
+                        ).length
+                          .toString()
+                          .padStart(2, "0")}
                       </span>
                     </div>
 
-                    <form onSubmit={createReview}>
-                      <div className="form-row">
-                        <div className="form-group">
-                          <label>
-                            Freelancer ID
-                          </label>
+                    {jobs.filter(
+                      (job) =>
+                        job.status === "completed" &&
+                        job.freelancer_id
+                    ).length === 0 ? (
+                      <div className="empty-state compact">
+                        <h3>No completed jobs ready for review</h3>
+                        <p>Complete an assigned job first, then review the freelancer here.</p>
+                      </div>
+                    ) : (
+                      <div className="job-list">
+                        {jobs
+                          .filter(
+                            (job) =>
+                              job.status === "completed" &&
+                              job.freelancer_id
+                          )
+                          .map((job) => (
+                            <article
+                              className="job-item"
+                              key={`review-job-${job.id}`}
+                            >
+                              <div className="job-main">
+                                <div className="job-title-line">
+                                  <span className="job-number">
+                                    #{String(job.id).padStart(3, "0")}
+                                  </span>
+                                  <span className="badge completed">
+                                    completed
+                                  </span>
+                                </div>
 
-                          <input
-                            className="field-input"
-                            type="number"
-                            name="freelancer_id"
-                            value={
-                              reviewForm.freelancer_id
-                            }
-                            onChange={reviewChange}
-                            placeholder="17"
-                            min="1"
-                            required
-                          />
+                                <h3>{job.title}</h3>
+                                <p>
+                                  Freelancer #{job.freelancer_id} completed this project.
+                                </p>
+                              </div>
+
+                              <div className="job-action">
+                                <button
+                                  className="primary-btn small"
+                                  onClick={() => startReview(job)}
+                                >
+                                  Review freelancer →
+                                </button>
+                              </div>
+                            </article>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {selectedReviewJob && (
+                    <div className="content-card create-card">
+                      <div className="card-heading">
+                        <div>
+                          <span className="overline">
+                            FEEDBACK
+                          </span>
+
+                          <h3>
+                            Review freelancer #{selectedReviewJob.freelancer_id}
+                          </h3>
                         </div>
 
-                        <div className="form-group">
-                          <label>
-                            Completed Job ID
-                          </label>
-
-                          <input
-                            className="field-input"
-                            type="number"
-                            name="job_id"
-                            value={
-                              reviewForm.job_id
-                            }
-                            onChange={reviewChange}
-                            placeholder="9"
-                            min="1"
-                            required
-                          />
-                        </div>
+                        <span className="number-label">
+                          JOB #{selectedReviewJob.id}
+                        </span>
                       </div>
 
-                      <div className="form-group">
+                      <form onSubmit={createReview}>
+                        <div className="form-row">
+                          <div className="form-group">
+                            <label>
+                              Freelancer
+                            </label>
+
+                            <input
+                              className="field-input"
+                              value={`Freelancer #${reviewForm.freelancer_id}`}
+                              readOnly
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label>
+                              Completed Job
+                            </label>
+
+                            <input
+                              className="field-input"
+                              value={`Job #${reviewForm.job_id} — ${selectedReviewJob.title}`}
+                              readOnly
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group">
                         <label>
                           Rating
                         </label>
@@ -2894,7 +2809,7 @@ function App() {
                       </button>
                     </form>
                   </div>
-
+                )}
                   <div className="content-card">
                     <span className="overline">
                       REVIEW POLICY
@@ -2906,10 +2821,10 @@ function App() {
 
                     <p>
                       Reviews can only be submitted for
-                      completed jobs and the reviewer must
-                      own the job. This protects the
-                      integrity of the TrustHire reputation
-                      system.
+                      completed jobs. Select a completed
+                      project above and TrustHire will
+                      automatically attach the assigned
+                      freelancer and job.
                     </p>
                   </div>
                 </>
