@@ -17,12 +17,14 @@ TrustHire AI addresses this problem by combining freelance hiring workflows with
 ## 3. Key Features
 
 ### Authentication
+
 - User registration
 - Secure password hashing using bcrypt
 - JWT-based authentication
 - Role-based access control
 
 ### Client Features
+
 - Create jobs
 - View own jobs
 - Update open jobs
@@ -36,6 +38,7 @@ TrustHire AI addresses this problem by combining freelance hiring workflows with
 - Analyze job/proposal cyber risk
 
 ### Freelancer Features
+
 - View available jobs
 - Submit proposals
 - View submitted proposals
@@ -44,18 +47,21 @@ TrustHire AI addresses this problem by combining freelance hiring workflows with
 - View cyber risk information
 
 ### Trust Intelligence
+
 - Freelancer trust score
 - Trust level classification
 - Review-based score updates
 - Job cyber risk assessment
 - Proposal cyber risk assessment
 - Risk score and explanation
+- VirusTotal URL threat intelligence
 
 ## 4. User Roles
 
 ### Client
 
 Can:
+
 - Create and manage jobs
 - Review proposals
 - Accept or reject proposals
@@ -66,6 +72,7 @@ Can:
 ### Freelancer
 
 Can:
+
 - View open jobs
 - Submit proposals
 - Track proposal status
@@ -76,33 +83,61 @@ Can:
 ## 5. Technology Stack
 
 ### Frontend
+
 - React
 - Vite
-- JavaScript
 - CSS
+- JavaScript
 
 ### Backend
-- Python
+
 - FastAPI
+- Python
 - SQLAlchemy
+- PyMySQL
 - Pydantic
-- JWT
-- bcrypt
-- Uvicorn
+
+### Authentication & Security
+
+- JWT authentication
+- bcrypt password hashing
+- Role-based access control
+- Environment-based secrets
+- CORS protection
+- Server-side validation
 
 ### Database
-- MySQL
-- PyMySQL
+
+- MySQL 8
+- SQLAlchemy ORM
+
+### AI & Cybersecurity
+
+- TrustHire AI rule-based cyber risk engine
+- Job risk assessment
+- Proposal risk assessment
+- VirusTotal threat intelligence integration
+- Freelancer trust scoring
 
 ### Testing & Quality
+
 - Pytest
 - Pytest-Cov
 - Ruff
 
-### DevOps
-- Git
-- GitHub
+### API Documentation
+
+- FastAPI Swagger / OpenAPI
+
+### CI/CD
+
 - GitHub Actions
+
+### Deployment
+
+- Frontend: Vercel
+- Backend: Railway
+- Database: Railway MySQL
 
 ## 6. Database Schema
 
@@ -123,35 +158,42 @@ TrustHire AI contains five core entities:
 - Job → Reviews
 - Job → Risk Assessment
 
-## 7. Business Workflow
+## 7. Live Deployment
+
+### Frontend
+
+https://trusthire-ai-eight.vercel.app
+
+### Backend API
+
+https://trusthireai-production.up.railway.app
+
+### Swagger API Documentation
+
+https://trusthireai-production.up.railway.app/docs
+
+### Health Check
+
+https://trusthireai-production.up.railway.app/health
+
+## 8. Deployment Architecture
 
 ```text
-Client
-  |
-  v
-Create Job
-  |
-  v
-Open Job
-  |
-  v
-Freelancer Submits Proposal
-  |
-  v
-Client Reviews Proposal
-  |
-  +------ Reject
-  |
-  +------ Accept
-             |
-             v
-          Assigned
-             |
-             v
-          Completed
-             |
-             v
-        Client Review
-             |
-             v
-       Trust Score Update
+User Browser
+     |
+     v
+React + Vite
+Vercel
+     |
+     | HTTPS REST API
+     v
+FastAPI Backend
+Railway
+     |
+     +------------------+
+     |                  |
+     v                  v
+Railway MySQL       VirusTotal API
+     |
+     v
+TrustHire AI Data
