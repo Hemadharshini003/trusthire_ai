@@ -79,32 +79,36 @@ def create_proposal(
 
 @router.get("/", response_model=list[ProposalResponse])
 def get_proposals(
+    job_id: int | None = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-
     if current_user.role == "freelancer":
-
-        return db.query(Proposal).filter(
+        query = db.query(Proposal).filter(
             Proposal.freelancer_id == current_user.id
-        ).all()
+        )
+
+        if job_id is not None:
+            query = query.filter(Proposal.job_id == job_id)
+
+        return query.all()
 
     if current_user.role == "client":
-
-        proposals = (
+        query = (
             db.query(Proposal)
             .join(Job, Proposal.job_id == Job.id)
             .filter(Job.client_id == current_user.id)
-            .all()
         )
 
-        return proposals
+        if job_id is not None:
+            query = query.filter(Proposal.job_id == job_id)
+
+        return query.all()
 
     raise HTTPException(
         status_code=403,
         detail="Unauthorized role"
     )
-
 
 # =========================================================
 # ACCEPT / REJECT PROPOSAL - CLIENT ONLY

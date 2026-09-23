@@ -49,6 +49,7 @@ function App() {
   });
 
   const [proposals, setProposals] = useState([]);
+  const [selectedJobId, setSelectedJobId] = useState("");
 
   const [trustScore, setTrustScore] = useState(null);
 
@@ -242,6 +243,7 @@ function App() {
     setUserId("");
     setJobs([]);
     setProposals([]);
+    setSelectedJobId("");
     setTrustScore(null);
     setReviews([]);
     setSelectedRiskJob(null);
@@ -686,6 +688,23 @@ function App() {
     return "badge pending";
   };
 
+  const getJobTitle = (jobId) => {
+    const job = jobs.find((item) => item.id === Number(jobId));
+    return job ? job.title : `Job #${jobId}`;
+  };
+
+  const filteredProposals = useMemo(() => {
+    if (selectedJobId === "") return proposals;
+
+    return proposals.filter(
+      (proposal) => String(proposal.job_id) === String(selectedJobId)
+    );
+  }, [proposals, selectedJobId]);
+
+  const filteredPendingProposals = filteredProposals.filter(
+    (proposal) => proposal.status === "pending"
+  ).length;
+
   const riskClass = (level) => {
     if (level === "HIGH") return "risk-badge high";
     if (level === "MEDIUM") return "risk-badge medium";
@@ -1029,6 +1048,8 @@ function App() {
           >
             <span className="side-icon">◇</span>
             Proposals
+
+            
           </button>
 
           <button
@@ -1785,6 +1806,16 @@ function App() {
                           job.status === "open" && (
                             <div className="action-stack">
                               <button
+                                className="primary-btn small"
+                                onClick={() => {
+                                  setSelectedJobId(String(job.id));
+                                  navigate("proposals");
+                                }}
+                              >
+                                View proposals
+                              </button>
+
+                              <button
                                 className="secondary-btn small"
                                 onClick={() =>
                                   updateJob(job.id)
@@ -1805,40 +1836,11 @@ function App() {
                               <button
                                 className="secondary-btn small"
                                 onClick={() =>
-                                  analyzeJobRisk(
-                                    job.id
-                                  )
+                                  analyzeJobRisk(job.id)
                                 }
                                 disabled={riskLoading}
                               >
                                 Analyze risk
-                              </button>
-                            </div>
-                          )}
-
-                        {userRole === "client" &&
-                          job.status === "assigned" && (
-                            <div className="action-stack">
-                              <button
-                                className="success-btn"
-                                onClick={() =>
-                                  completeJob(
-                                    job.id
-                                  )
-                                }
-                              >
-                                Mark completed
-                              </button>
-
-                              <button
-                                className="secondary-btn small"
-                                onClick={() =>
-                                  analyzeJobRisk(
-                                    job.id
-                                  )
-                                }
-                              >
-                                Risk analysis
                               </button>
                             </div>
                           )}
@@ -2000,15 +2002,55 @@ function App() {
 
               <div className="list-heading">
                 <span>
-                  {proposals.length} PROPOSAL
-                  {proposals.length === 1
+                  {filteredProposals.length} PROPOSAL
+                  {filteredProposals.length === 1
                     ? ""
                     : "S"}
                 </span>
 
                 <small>
-                  {pendingProposals} pending review
+                  {filteredPendingProposals} pending review
                 </small>
+              </div>
+
+              <div className="filter-card proposal-filter-card">
+                <div className="form-group grow">
+                  <label htmlFor="proposalJobFilter">
+                    Filter proposals by job
+                  </label>
+
+                  <select
+                    id="proposalJobFilter"
+                    className="field-input"
+                    value={selectedJobId}
+                    onChange={(e) =>
+                      setSelectedJobId(e.target.value)
+                    }
+                  >
+                    <option value="">
+                      All jobs ({proposals.length})
+                    </option>
+
+                    {jobs.map((job) => (
+                      <option
+                        key={job.id}
+                        value={String(job.id)}
+                      >
+                        #{job.id} — {job.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {selectedJobId !== "" && (
+                  <button
+                    type="button"
+                    className="clear-btn"
+                    onClick={() => setSelectedJobId("")}
+                  >
+                    Show all
+                  </button>
+                )}
               </div>
 
               {proposals.length === 0 ? (
@@ -2024,9 +2066,29 @@ function App() {
                     appear here.
                   </p>
                 </div>
+              ) : filteredProposals.length === 0 ? (
+                <div className="empty-state">
+                  <span>—</span>
+
+                  <h3>
+                    No proposals for this job
+                  </h3>
+
+                  <p>
+                    Choose another job or select All jobs to view every proposal.
+                  </p>
+
+                  <button
+                    type="button"
+                    className="secondary-btn"
+                    onClick={() => setSelectedJobId("")}
+                  >
+                    Show all proposals
+                  </button>
+                </div>
               ) : (
                 <div className="proposal-list">
-                  {proposals.map((proposal) => (
+                  {filteredProposals.map((proposal) => (
                     <article
                       className="proposal-item"
                       key={proposal.id}
@@ -2039,8 +2101,12 @@ function App() {
                           </span>
 
                           <h3>
-                            Job #{proposal.job_id}
+                            {getJobTitle(proposal.job_id)}
                           </h3>
+
+                          <small className="proposal-job-id">
+                            Job #{proposal.job_id}
+                          </small>
                         </div>
 
                         <span
