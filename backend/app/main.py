@@ -34,6 +34,9 @@ app = FastAPI(
     description="AI-powered cybersecurity-focused freelance hiring platform",
     version="1.0.0"
 )
+@app.get("/")
+def root():
+    return {"message": "TrustHire AI API is running"}
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
