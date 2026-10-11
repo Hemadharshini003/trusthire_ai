@@ -1,11 +1,11 @@
 
-from urllib.parse import quote_plus
 from pathlib import Path
+from urllib.parse import quote_plus
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from app.config import DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
+from app.config import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 
 DATABASE_URL = (
     f"mysql+pymysql://{quote_plus(DB_USER)}:"
