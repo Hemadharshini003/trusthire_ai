@@ -1,10 +1,10 @@
 
 from sqlalchemy import (
     Column,
+    DateTime,
+    ForeignKey,
     Integer,
     String,
-    ForeignKey,
-    DateTime,
     UniqueConstraint,
 )
 from sqlalchemy.sql import func
