@@ -1,13 +1,22 @@
 
+from urllib.parse import quote_plus
+from pathlib import Path
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from urllib.parse import quote_plus
 
 from app.config import DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
 
 DATABASE_URL = (
     f"mysql+pymysql://{quote_plus(DB_USER)}:"
-    f"{quote_plus(DB_PASSWORD)}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    f"{quote_plus(DB_PASSWORD or '')}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
+
+# TiDB CA certificate location
+CA_CERT_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "certs"
+    / "isrgrootx1.pem"
 )
 
 engine = create_engine(
@@ -15,7 +24,10 @@ engine = create_engine(
     echo=False,
     pool_pre_ping=True,
     connect_args={
-        "ssl": {},
+        "ssl": {
+            "ca": str(CA_CERT_PATH),
+            "check_hostname": True,
+        }
     },
 )
 
