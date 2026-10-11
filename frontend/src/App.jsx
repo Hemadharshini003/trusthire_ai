@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
-const API = "https://trusthireai-production.up.railway.app";
+const API = "https://trusthire-ai-vgbo.onrender.com";
 
 function App() {
   const [activeSection, setActiveSection] = useState(
